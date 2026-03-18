@@ -38,6 +38,15 @@ class AuthController extends Controller
             ];
         }
         $token = $user->createToken($request->email);
+    // IF ADMIN IS THE ONE LOGIN
+         if($user->role == 'admin'){
+            return [
+            'message' => "welcome admin dashboard",
+            'user' => $user,
+            'token' => $token->plainTextToken
+        ];
+        }
+    // IF USER IS THE ONE LOGIN
         return [
             'user' => $user,
             'token' => $token->plainTextToken
@@ -46,11 +55,10 @@ class AuthController extends Controller
 
     // Logout Controller---------------------------------------------------------------------- 
     public function logout(Request $request){
-        $request->user()->tokens()->delete();
-        return [
-            'message' => 'Logout successfully'
-        ];
+        $request->user()->currentAccessToken()->delete();
+        return view('auth.authentication');
     }
+
     public function show(Request $request){
         return [
             'name' => $request->user()->name

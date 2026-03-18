@@ -9,20 +9,12 @@
 </head>
 <body>
          <div class="container d-flex flex-column align-items-center justify-content-center vh-sm-100">
-     <header>
-           <div class="container d-flex flex-column align-items-center justify-content-center pt-5 mt-5">
-        <div class="d-flex align-items-center justify-content-center rounded-circle position-relative" style="width: 7em; height: 7em;">
-            <img src="{{ asset('images/logo.png') }}" alt="Arcadia Logo" class="w-100 h-100 object-fit-contain">
-        </div>
-        <h1>Arcadia Hobby House</h1>
-        <p class="text-secondary">Shop or manage your store</p>
-</div>
-     </header>
+   @include('components.header')
      <main>
     @yield('main')
      </main>
 </div>
-
+    
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
