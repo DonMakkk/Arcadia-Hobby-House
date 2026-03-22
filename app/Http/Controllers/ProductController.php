@@ -7,8 +7,9 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Routing\Controller\HasMiddleware;
 use Illuminate\Routing\Controller\Middleware;
+use Illuminate\Http\Request;
 
-class ProductController extends Controller implements HasMiddleware
+class ProductController extends Controller 
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,8 @@ class ProductController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         //
-      
+      $products = Product::take(7)->get();
+      return view('pages.home',compact('products'));
     }
 
     /**
@@ -30,9 +32,11 @@ class ProductController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product, $category)
     {
         //
+        $sortedByCategory = Product::where('category', $category)->get();
+        return view('pages.category_page', compact('sortedByCategory'));
     }
 
     /**
@@ -50,4 +54,5 @@ class ProductController extends Controller implements HasMiddleware
     {
         //
     }
+
 }

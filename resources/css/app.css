@@ -1,11 +1,120 @@
-@import 'tailwindcss';
-
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+.title-main {
+    font-size: 15px;
+    color: #1e3a5f;
+}
+
+.title-sub {
+    font-size: 11px;
+    color: #555759;
+}
+
+.custom-search {
+    border: 1px solid #dbeafe;
+    background-color: #ffffff !important;
+    color: #1e3a5f !important;
+    font-size: 0.875rem;
+}
+
+.custom-search::placeholder {
+    color: #444546;
+}
+
+.custom-search:focus {
+    box-shadow: 0 0 0 0.2rem #3b82f6;
+    border-color: #3b82f6;
+}
+
+.nav-btn {
+    color: #404e62;
+}
+
+.nav-btn:hover {
+    background-color: #eff6ff;
+}
+/* HERO SECTION BACKGROUND */
+.hero-section {
+    background: linear-gradient(135deg, #1e3a5f, #1d4ed8, #2563eb);
+    min-height: 40vh;
+}
+
+/* OVERLAY (RADIAL LIGHT EFFECT) */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgb(96, 165, 250), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgb(191, 219, 254), transparent 50%);
+    z-index: 0;
+}
+
+/* BADGE */
+.hero-badge {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    font-size: 0.875rem;
+}
+
+/* TITLE */
+.hero-title {
+    font-weight: 800;
+    line-height: 1.1;
+    font-size: clamp(36px, 5vw, 60px);
+}
+
+/* TEXT */
+.hero-text {
+    color: #bfdbfe;
+    max-width: 36rem;
+    line-height: 1.6;
+}
+
+/* OUTLINE BUTTON */
+.hero-outline-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+}
+
+/* HOVER EFFECT */
+.hero-outline-btn:hover {
+    background-color: rgba(254, 252, 252, 0.2);
+    color: white;
+}
+
+
+.category-card {
+  transition: all 0.2s ease;
+}
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+}
+.product-card{
+    height: 15em;
+
+}
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+.product-card:hover {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+
+.product-title:hover {
+  color:#3B82F6 !important;
 }

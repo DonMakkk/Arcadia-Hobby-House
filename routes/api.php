@@ -30,5 +30,5 @@ Route::prefix('admin')->group(function(){
     Route::post('/insert_product', [UserController::class, 'addProduct']);
     Route::put('/update_product/{product}', [UserController::class, 'updateProduct']);
     Route::delete('/remove_product', [UserController::class, 'removeProduct']);
-})
+});
 // ------------------------------------ CUSTOMER ROUTES HERE -------------------------------------

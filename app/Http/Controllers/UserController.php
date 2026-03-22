@@ -7,8 +7,21 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Middleware\AdminMiddleware;
 class UserController extends Controller 
 {
+    public function __construct(){
+        $this->middleware('admin')->only([
+            'showOrders',
+            'dashboard',
+            'updateProduct',
+            'removeProduct',
+            'totalRevenue',
+            'updateOrderInformation'
+            ]);
+    }
     //--------------------------------------------------USER CONTROLLS--------------------------------------------------
     public function index()
     {
@@ -46,19 +59,16 @@ class UserController extends Controller
     //**-------------------------------------------------ADMIN CONTROLLS--------------------------------------------------
 //?--------------------------------------------------ADDING PRODUCT [DONE]--------------------------------------------------
     public function addProduct(Request $request){
-       if($request->user()->role !== 'admin'){
-        return response()->json([
-            'message' => 'Unauthorized'
-        ], 403);
-       }
+       
         $validated = $request->validate([
             'name' => 'required',
             'price' => 'required',
             'description' => 'required',
+            'category' => 'required',
             'stock' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-        $valiated['image'] = $request->file('image')->store('products', 'public');
+        $validated['image'] = $request->file('image')->store('products', 'public');
         Product::create($validated);
         return redirect()->back()->with('message', 'Product added successfully');
     }
@@ -97,7 +107,7 @@ class UserController extends Controller
             'stock' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-        $valiated['image'] = $request->file('image')->store('products', 'public');
+        $validated['image'] = $request->file('image')->store('products', 'public');
         $product->update($validated);
         return redirect()->back()->with('message', 'Product updated successfully');
     }
@@ -124,6 +134,16 @@ class UserController extends Controller
         $revenue->update(
             ['total' => $carts]
             );
-        return redirect()->back()->with('message', 'item removed successfully');
+        return redirect()->json([
+            'message' => 'Item Removed'
+        ]);
     }
+//!--------------------------------------------------PUT UPDATE ORDER INFORMATION--------------------------------------------------
+    public function updateOrderInformation(Request $request){
+        // if(Auth::attempt($request->only('email', 'password'))){
+        // $user = Auth::user();
+        // if(user()->isAdmin())
+        // }
+    }
+
 }
