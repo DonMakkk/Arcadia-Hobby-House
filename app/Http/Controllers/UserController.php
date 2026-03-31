@@ -36,13 +36,29 @@ class UserController extends Controller
         }
     }
 
-    public function show(User $user)
+    public function addToCart($id)
     {
         // Sends the products in cart
-         if($request->user()){
-            $products = Product::whereIn('product_id', $request->user()->carts()->pluck('product_id'))->get();
+         if(!Auth::check()){
+            return view('auth.login');
         }
-
+        $user = Auth::user();
+        $product = Product::find($id);
+          if (!$product) {
+        return response()->json([
+            'message' => 'Product not found'
+        ], 404);
+    }
+        $cart = Cart::where('user_id', $user->id)->where('product_id', $id)->first();
+        if($cart){
+            $cart->increment('quantity');
+        }else{
+        $insertToCart = Cart::create([ 'user_id' => $user->id,
+        'product_id'=>  $product->id,
+        'quantity' => 1,
+        'status' => 'in progress']);
+        }
+         return redirect()->back();
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -55,11 +71,13 @@ class UserController extends Controller
         // Remove Item From The Cart
         $deleteItemInCart = Cart::where('product_id', $id)->delete();
     }
-
+  
     //**-------------------------------------------------ADMIN CONTROLLS--------------------------------------------------
 //?--------------------------------------------------ADDING PRODUCT [DONE]--------------------------------------------------
     public function addProduct(Request $request){
-       
+    //    if(!Auth::check()){
+    //      return view('auth.login');
+    //    }
         $validated = $request->validate([
             'name' => 'required',
             'price' => 'required',
@@ -85,12 +103,12 @@ class UserController extends Controller
 
 //!--------------------------------------------------DASHBOARD PRODUCT [IN PROGRESS]--------------------------------------------------
     public function dashboard(){
-          if($request->user()->role !== 'admin'){
-        return response()->json([
-            'message' => 'Unauthorized'
-        ], 403);
-       }
-       
+    //       if(!Auth::check() && !$request->user()isAdmin()){
+    //     return response()->json([
+    //         'message' => 'Unauthorized'
+    //     ], 403);
+    //    }
+       return view('layouts.admin');
     }
 
 //?--------------------------------------------------UPDATE PRODUCT [DONE]--------------------------------------------------
@@ -144,6 +162,29 @@ class UserController extends Controller
         // $user = Auth::user();
         // if(user()->isAdmin())
         // }
+    }
+        public function profile(){
+            if(!Auth::check()){
+                return redirect()->route('login');
+            }
+            $user = Auth::user();
+            $cart = Cart::where('user_id', Auth::id())->get();
+            $product_ids = $cart->pluck('product_id');
+            $product = Product::whereIn('id', $product_ids)->get();
+            return view('pages.wishlist', compact('user', 'cart', 'product'));
+        }
+    private function getSectionPage($section){
+        return match($section){
+            'best-seller' , 'featured'=> 'home',
+            default => null
+        };
+    }
+    public function navigate($section){
+        $page = $this->getSectionPage($section);
+        if(!$page){
+            return redirect()->route('login');
+        }
+        return redirect(route($page) . '#' . $section);
     }
 
 }

@@ -32,7 +32,7 @@
           <i class="bi bi-arrow-right"></i>
         </a>
 
-        <a href="#" class="btn btn-outline-light btn-lg d-inline-flex align-items-center gap-2 hero-outline-btn">
+        <a href="#shopByCategories" class="btn btn-outline-light btn-lg d-inline-flex align-items-center gap-2 hero-outline-btn">
           Browse Categories
         </a>
 

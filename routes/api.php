@@ -5,13 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\AdminController;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
 // THIS ROUTES FOR SENDING UPDATING DATA. USE WEB.PHP FOR THE SENIDNG VIEW
-Route::get('/test', function(){
+Route::get('/', function(){
     return view('auth.login');
 });
 
@@ -27,7 +27,7 @@ Route::prefix('admin')->group(function(){
     Route::get('/orders', [UserController::class, 'orders']);
     Route::get('/dashboard', [UserController::class, 'dashboard']);
     Route::get('/show_orders', [UserController::class, 'show_orders']);
-    Route::post('/insert_product', [UserController::class, 'addProduct']);
+    Route::post('/insert_product', [AdminController::class, 'addProduct']);
     Route::put('/update_product/{product}', [UserController::class, 'updateProduct']);
     Route::delete('/remove_product', [UserController::class, 'removeProduct']);
 });

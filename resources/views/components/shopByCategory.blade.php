@@ -1,4 +1,4 @@
-<section class="bg-light p-5">
+<section class="bg-light p-5" id="shopByCategories">
   <div class="container py-5">
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-end mb-4">

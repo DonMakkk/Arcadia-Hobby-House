@@ -1,5 +1,5 @@
-<section class=" p-2 pt-5 w-100 bg-light" >
- <div class="container">
+<section class=" p-2 pt-5 w-100 bg-light" id="categories">
+ <div class="container px-0">
      <div class="d-flex justify-content-between align-items-end mb-4">
     <div>
       <h2 class="fw-bold mb-1" style="color:#1E3A5F;">Featured Products</h2>
@@ -11,8 +11,8 @@
 
 <div class="row align-items-end px-5 pb-5 flex-grow-1">
     @foreach($sortedByCategory as $product)
-<div class="col-6 col-md-4 col-lg-4 mb-4">
-        <div class="card border-0 shadow-sm product-card h-100" style="border:1px solid #DBEAFE; border-radius:16px; overflow:hidden; min-height:400px;">
+<div class="col-6 col-md-4 col-lg-3 mb-4">
+        <div class="card border-0 shadow-sm product-card h-100" style="border:1px solid #DBEAFE; border-radius:16px; overflow:hidden; min-height:350px;">
   <!-- Image -->
   <div class="position-relative overflow-hidden">
     <a href="/product/1">
@@ -51,12 +51,15 @@
     <!-- Bottom -->
     <div class="d-flex justify-content-between align-items-center mt-auto">
       <div>
-        <h4 class="fw-bold" style="color:#1E3A5F;">₱{{$product->price}}</h4>
+        <h5 class="fw-bold" style="color:#1E3A5F;">₱{{$product->price}}</h5>
           </div>
 
-      <button class="btn text-white p-2" style="background:#3B82F6;">
-        <i class="bi bi-cart"></i>
-      </button>
+     <form class="btn text-white p-2" style="background:#3B82F6;" action="{{route('addToCart.addToCart',$product->id)}}" method="POST">
+        @csrf
+        <button type="submit" class="btn p-0">
+        <i class="bi bi-cart text-light"></i>
+        </button>
+      </form>
     </div>
 
   </div>

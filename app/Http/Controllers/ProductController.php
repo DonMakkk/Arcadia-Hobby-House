@@ -16,11 +16,17 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        //
       $products = Product::take(7)->get();
-      return view('pages.home',compact('products'));
+      $newProduct = Product::latest()->take(5)->get();
+
+      return view('pages.home',compact('products', 'newProduct'));
     }
 
+    public function products(){
+       $products = Product::all();
+       return response()->json($products);
+    }
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -55,4 +61,17 @@ class ProductController extends Controller
         //
     }
 
+   public function search(Request $request){
+    $request->validate([
+        'search' => 'required'
+    ]);
+    $search = $request->search;
+    $sortedByCategory = Product::where('name', 'LIKE', "%{$search}%")->get();
+    return view('pages.category_page', compact('sortedByCategory', 'search'));
+   }
+   public function product_details($id){
+        $product = Product::find($id);
+        $suggestions = Product::latest()->take(4)->get();
+        return view('pages.product_detail', compact('product','suggestions'));
+   }
 }

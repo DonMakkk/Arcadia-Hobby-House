@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->double('price');
             $table->string('image');
+            $table->integer('solds')->default(0);
             $table->string('description');
             $table->timestamps();
         });
