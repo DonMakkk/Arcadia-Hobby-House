@@ -363,7 +363,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light top-navbar pe-2">
 <div class="container-fluid navbar-container">
 
-    <a class="navbar-brand d-flex align-items-center" href="/">
+    <a class="navbar-brand d-flex align-items-center" href="route('home')">
         <img src="{{ asset('images/logo.png') }}?v=2" style="height:45px; margin-right:8px;">
         <div class="d-none d-lg-block">
             <div style="font-weight:bold;">Arcadia</div>
@@ -377,9 +377,9 @@
             <i class="bi bi-person-fill"></i>
         </a>
 
-        <a class="nav-link cart-icon" href="#">
+        <a class="nav-link cart-icon" href="{{route('cart')}}">
             <i class="bi bi-cart2"></i>
-            <span class="cart-badge">0</span>
+            <span class="cart-badge">{{ Auth::check() ? \App\Models\Cart::where('user_id', Auth::id())->count() : 0 }}</span>
         </a>
 
         <button class="navbar-toggler" type="button"
@@ -426,7 +426,7 @@
                 <i class="bi bi-person-fill"></i>
             </a>
 
-            <a class="nav-link cart-icon d-inline-flex" href="#">
+            <a class="nav-link cart-icon d-inline-flex" href="{{route('cart')}}">
                         <i class="bi bi-cart2"></i>
                         <span class="cart-badge"> {{ Auth::check() ? \App\Models\Cart::where('user_id', Auth::id())->count() : 0 }}</span>
             </a>
@@ -444,12 +444,12 @@
             </form>
 
             <div class="mobile-category-grid">
-                <button class="btn category-chip">🎲 Board Games</button>
-                <button class="btn category-chip">🃏 Trading Cards</button>
-                <button class="btn category-chip">🧱 LEGO Sets</button>
-                <button class="btn category-chip">⭐ Collectibles</button>
-                <button class="btn category-chip">🧩 Puzzles</button>
-                <button class="btn category-chip">🎨 Art Supplies</button>
+                <a href="{{route('category.show','collectibles')}}" class="btn category-chip">🎲 Board Games</a >
+                <a href="{{route('category.show','collectibles')}}" class="btn category-chip">🃏 Trading Cards</a >
+                <a href="{{route('category.show','collectibles')}}" class="btn category-chip">🧱 LEGO Sets</a >
+                <a href="{{route('category.show','collectibles')}}"  class="btn category-chip">⭐ Collectibles</a >
+                <a href="{{route('category.show','collectibles')}}"  class="btn category-chip">🧩 Puzzles</a >
+                <a href="{{route('category.show','collectibles')}}"  class="btn category-chip">🎨 Art Supplies</a >
             </div>
 
         </div>
@@ -615,19 +615,3 @@ console.log('Navbar + Search system loaded successfully 🚀');
 
 
 
-{{--    <li><a class="dropdown-item" href="{{route('category.show','board games')}}">Board Games</a></li>
-                            <li><a class="dropdown-item" href="{{route('category.show','trading cards')}}">Trading Cards</a></li>
-                            <li><a class="dropdown-item" href="{{route('category.show','lego sets')}}">LEGO Sets</a></li>
-                            <li><a class="dropdown-item" href="{{route('category.show','collectibles')}}">Collectibles</a></li>
-                            <li><a class="dropdown-item" href="{{route('category.show','puzzles')}}">Puzzles</a></li>
-                            <li><a class="dropdown-item" href="{{route('category.show','art supplies')}}">Art Supplies</a></li>
-                            <li><a class="dropdown-item" href="{{route('category.show','all categories')}}">All Categories</a></li>
-                            
-                               <a class="nav-link cart-icon d-inline-flex" href="#">
-                        <i class="bi bi-cart2"></i>
-                        <span class="cart-badge"> {{ Auth::check() ? \App\Models\Cart::where('user_id', Auth::id())->count() : 0 }}</span>
-                    </a>
-                            
-
-                 
-                            --}}

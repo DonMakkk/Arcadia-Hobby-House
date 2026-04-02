@@ -22,9 +22,13 @@ Route::post('/searchProduct', [ProductController::class, 'search'])->name('searc
 // ------------------------------------ CUSTOMER ROUTES HERE -------------------------------------
 Route::prefix('user')->group(function(){
     Route::get('/profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
+     Route::get('/cart', [UserController::class, 'showCartPage'])->middleware('auth')->name('cart');
+     Route::post('/cart/{id}/increase', [UserController::class, 'increase'])->name('cart.increase');
+Route::post('/cart/{id}/decrease', [UserController::class, 'decrease'])->name('cart.decrease');
+Route::delete('/cart/{id}', [UserController::class, 'remove'])->name('cart.remove');
     Route::match(['GET', 'POST'], '/addToCart/{id}', [UserController::class, 'addToCart'])->name('addToCart.addToCart');
     Route::get('/category/{category}', [ProductController::class, 'show'])->name('category.show');
-    Route::get('/cart', function(){ return view('pages.cart_page');})->name('cart');
+  
     Route::get('/navigate/{section}', [UserController::class, 'navigate'])->name('navigate');
 });
 

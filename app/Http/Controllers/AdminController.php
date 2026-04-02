@@ -47,7 +47,8 @@ class AdminController extends Controller
     //         'message' => 'Unauthorized'
     //     ], 403);
     //    }
-       return view('admin.pages.admin_products');
+      $products =  Product::all();
+       return view('admin.pages.admin_products', compact('products'));
     }
 
 //?--------------------------------------------------UPDATE PRODUCT [DONE]--------------------------------------------------

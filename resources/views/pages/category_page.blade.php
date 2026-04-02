@@ -80,7 +80,7 @@
       <a href="#categories" class="btn btn-outline-primary">Browse Categories</a>
     </div>
   </div>
-  @include('components.shopByCategory')
+
   @endif
 </div>
 @endsection

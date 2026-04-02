@@ -56,17 +56,10 @@
         data-bs-toggle="tab"
         data-bs-target="#products"
         type="button">
-        <i class="bi bi-box"></i> Products
+        <i class="bi bi-archive"></i> Inventory
     </button>
 
-    <!-- LINKS (unchanged) -->
-   <button
-        class="nav-link d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"
-        data-bs-toggle="tab"
-        data-bs-target="#inventory"
-        type="button">
-       <i class="bi bi-archive"></i> Inventory
-    </button>
+    
 
     <button
         class="nav-link d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"

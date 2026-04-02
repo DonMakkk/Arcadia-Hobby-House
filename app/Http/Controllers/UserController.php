@@ -156,6 +156,10 @@ class UserController extends Controller
             'message' => 'Item Removed'
         ]);
     }
+    public function removeItemInCart($id){
+      $cart = Cart::where('id', $id)->delete();
+      return response()->route('cart');
+    }
 //!--------------------------------------------------PUT UPDATE ORDER INFORMATION--------------------------------------------------
     public function updateOrderInformation(Request $request){
         // if(Auth::attempt($request->only('email', 'password'))){
@@ -171,8 +175,54 @@ class UserController extends Controller
             $cart = Cart::where('user_id', Auth::id())->get();
             $product_ids = $cart->pluck('product_id');
             $product = Product::whereIn('id', $product_ids)->get();
-            return view('pages.wishlist', compact('user', 'cart', 'product'));
+            return view('pages.profile_content', compact('user', 'cart', 'product'));
         }
+        
+  public function showCartPage(){
+    if(!Auth::check()){
+        return redirect()->route('login');
+    }
+    // Get cart items
+    $cart = Cart::where('user_id', Auth::id())->get();
+    $product_ids = $cart->pluck('product_id');
+    if($cart->isEmpty()) {
+        return view('pages.cart_page', compact('cart'));
+    }
+    // Get products + match quantities
+    $products = Product::whereIn('id', $product_ids)->get();
+
+    // FIXED: Total = price × matching cart quantity
+    $total = $products->sum(function($product) use ($cart) {
+        $quantity = $cart->where('product_id', $product->id)->first()->quantity ?? 1;
+        return $product->price * $quantity;
+    });
+    return view('pages.cart_page', compact('cart', 'products', 'total'));
+}
+
+    public function increase($id){
+    $cart = Cart::findOrFail($id);
+    $cart->quantity += 1;
+    $cart->save();
+
+    return back();
+}
+
+public function decrease($id){
+    $cart = Cart::findOrFail($id);
+
+    if($cart->quantity > 1){
+        $cart->quantity -= 1;
+        $cart->save();
+    }
+
+    return back();
+}
+
+public function remove($id){
+    Cart::findOrFail($id)->delete();
+    return back();
+}
+
     private function getSectionPage($section){
         return match($section){
             'best-seller' , 'featured'=> 'home',

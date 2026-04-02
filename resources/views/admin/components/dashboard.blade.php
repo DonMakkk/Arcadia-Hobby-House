@@ -174,19 +174,402 @@
   <!-- PRODUCTS TAB -->
   <div class="tab-pane fade" id="products">
     <div class="container-fluid">
-      <h3>Products Content Here</h3>
+      <!-- MAIN CONTENT (Bootstrap 5) -->
+<div class="container-fluid p-4" style="background:#F1F5F9; min-height:100vh;">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold text-primary">Inventory Management</h3>
+            <small class="text-muted">245 total products</small>
+        </div>
+
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">
+    + Add Product
+</button>
+    </div>
+
+
+ <!-- Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Add New Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+                <form>
+
+                    <div class="row g-3">
+
+                        <!-- NAME -->
+                        <div class="col-md-6">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" placeholder="Enter product name">
+                        </div>
+
+                        <!-- CATEGORY -->
+                        <div class="col-md-6">
+                            <label class="form-label">Category</label>
+                            <select class="form-select">
+                                <option selected disabled>Select category</option>
+                                <option>Board Games</option>
+                                <option>Trading Cards</option>
+                                <option>LEGO Sets</option>
+                                <option>Collectibles</option>
+                            </select>
+                        </div>
+
+                        <!-- PRICE -->
+                        <div class="col-md-6">
+                            <label class="form-label">Price</label>
+                            <input type="number" class="form-control" placeholder="0.00">
+                        </div>
+
+                        <!-- STOCK -->
+                        <div class="col-md-6">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-control" placeholder="0">
+                        </div>
+
+                        <!-- IMAGE -->
+                        <div class="col-12">
+                            <label class="form-label">Image URL</label>
+                            <input type="file" class="form-control" placeholder="https://example.com/image.jpg">
+                        </div>
+
+                        <!-- DESCRIPTION -->
+                        <div class="col-12">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter product description"></textarea>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary">Save Product</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- FILTERS -->
+    <div class="d-flex gap-2 mb-3 flex-wrap">
+        <input type="text" class="form-control w-auto" placeholder="Search products...">
+
+        <select class="form-select w-auto">
+            <option>All Categories</option>
+            <option>Board Games</option>
+            <option>Trading Cards</option>
+            <option>LEGO Sets</option>
+            <option>Collectibles</option>
+        </select>
+
+        <select class="form-select w-auto">
+            <option>Sort by Name</option>
+            <option>Sort by Price</option>
+        </select>
+
+        <button class="btn btn-outline-primary">Filter</button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <!-- ROW -->
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="https://via.placeholder.com/40"
+                                     class="rounded" width="40" height="40">
+                                <span class="fw-semibold">Catan Board Game</span>
+                            </div>
+                        </td>
+
+                        <td>Board Games</td>
+                        <td class="fw-bold">$45.99</td>
+
+                        <td>
+                            <span class="badge bg-success-subtle text-success">
+                                15 units
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary">View</button>
+                            <button class="btn btn-sm btn-outline-primary">Edit</button>
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                    </tr>
+
+                    <!-- ROW -->
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="https://via.placeholder.com/40"
+                                     class="rounded" width="40" height="40">
+                                <span class="fw-semibold">Pokemon Cards Pack</span>
+                            </div>
+                        </td>
+
+                        <td>Trading Cards</td>
+                        <td class="fw-bold">$12.50</td>
+
+                        <td>
+                            <span class="badge bg-warning-subtle text-warning">
+                                5 units
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary">View</button>
+                            <button class="btn btn-sm btn-outline-primary">Edit</button>
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <small>Showing 1–10 of 245</small>
+
+        <nav>
+            <ul class="pagination mb-0">
+                <li class="page-item"><a class="page-link">Prev</a></li>
+                <li class="page-item active"><a class="page-link">1</a></li>
+                <li class="page-item"><a class="page-link">2</a></li>
+                <li class="page-item"><a class="page-link">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+
+</div>
     </div>
   </div>
-  {{-- Inventory --}}
-   <div class="tab-pane fade" id="inventory">
-    <div class="container-fluid">
-      <h3>Inventory</h3>
-    </div>
-  </div>
+  
 {{-- Orders --}}
    <div class="tab-pane fade" id="orders">
     <div class="container-fluid">
-      <h3>Orders</h3>
+      <!-- MAIN CONTENT (BOOTSTRAP 5) -->
+<div class="container-fluid p-4" style="background:#F1F5F9; min-height:100vh;">
+
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h4 class="fw-bold text-primary">Order Management</h4>
+        <small class="text-muted">5 total orders</small>
+    </div>
+
+    <!-- STATUS CARDS -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-6 col-md">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold">2</h5>
+                    <span class="badge bg-warning-subtle text-warning">Pending</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold">1</h5>
+                    <span class="badge bg-primary-subtle text-primary">Processing</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold">1</h5>
+                    <span class="badge bg-secondary-subtle text-purple">Shipped</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold">1</h5>
+                    <span class="badge bg-success-subtle text-success">Delivered</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold">0</h5>
+                    <span class="badge bg-danger-subtle text-danger">Cancelled</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SEARCH + FILTER -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body d-flex flex-wrap gap-2">
+
+            <input type="text" class="form-control flex-grow-1"
+                   placeholder="Search by order ID, customer name, or email...">
+
+            <select class="form-select w-auto">
+                <option>All Statuses</option>
+                <option>Pending</option>
+                <option>Processing</option>
+                <option>Shipped</option>
+                <option>Delivered</option>
+                <option>Cancelled</option>
+            </select>
+
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <!-- ROW -->
+                    <tr>
+                        <td class="fw-bold">ORD-001</td>
+                        <td>
+                            <div class="fw-semibold">Alex Johnson</div>
+                            <small class="text-muted">alex@example.com</small>
+                        </td>
+                        <td>2026-02-20</td>
+                        <td>3 item(s)</td>
+                        <td class="fw-bold">₱134.97</td>
+                        <td>
+                            <span class="badge bg-success-subtle text-success">Delivered</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="fw-bold">ORD-002</td>
+                        <td>
+                            <div class="fw-semibold">Maria Santos</div>
+                            <small class="text-muted">maria@example.com</small>
+                        </td>
+                        <td>2026-02-22</td>
+                        <td>2 item(s)</td>
+                        <td class="fw-bold">₱174.98</td>
+                        <td>
+                            <span class="badge bg-secondary-subtle text-dark">Shipped</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="fw-bold">ORD-003</td>
+                        <td>
+                            <div class="fw-semibold">Sam Lee</div>
+                            <small class="text-muted">sam@example.com</small>
+                        </td>
+                        <td>2026-02-23</td>
+                        <td>1 item(s)</td>
+                        <td class="fw-bold">₱89.99</td>
+                        <td>
+                            <span class="badge bg-primary-subtle text-primary">Processing</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="fw-bold">ORD-004</td>
+                        <td>
+                            <div class="fw-semibold">Jordan Kim</div>
+                            <small class="text-muted">jordan@example.com</small>
+                        </td>
+                        <td>2026-02-24</td>
+                        <td>2 item(s)</td>
+                        <td class="fw-bold">₱64.98</td>
+                        <td>
+                            <span class="badge bg-warning-subtle text-warning">Pending</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="fw-bold">ORD-005</td>
+                        <td>
+                            <div class="fw-semibold">Taylor Brown</div>
+                            <small class="text-muted">taylor@example.com</small>
+                        </td>
+                        <td>2026-02-25</td>
+                        <td>2 item(s)</td>
+                        <td class="fw-bold">₱394.98</td>
+                        <td>
+                            <span class="badge bg-warning-subtle text-warning">Pending</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
     </div>
   </div>
 </div>
