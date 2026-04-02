@@ -1,5 +1,22 @@
 <!-- admin.components.sidebar -->
+<style>
+/* default */
+.nav-link {
+    color: white !important;
+}
 
+/* ACTIVE STYLE (your design) */
+.nav-link.active {
+    background-color: #f8f9fa !important; /* same as bg-light */
+    color: #0d6efd !important;           /* text-primary */
+    font-weight: 600;
+}
+
+/* hover (optional) */
+.nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+</style>
 <div class="d-flex flex-column text-white h-100 w-100"
      style="background-color: DarkBlue;">
 
@@ -17,29 +34,52 @@
     </div>
 
     <!-- NAV -->
-    <nav class="flex-grow-1 p-2">
+  
 
-        <a href="/admin/dashboard"
-           class="d-flex align-items-center gap-2 p-2 rounded text-white text-decoration-none">
-            <i class="bi bi-grid"></i> Dashboard
-        </a>
+        <!-- DASHBOARD -->
+    <nav class="nav flex-column p-2 flex-grow-1">
 
-        <a href="/admin/products"
-           class="d-flex align-items-center gap-2 p-2 rounded bg-light text-primary text-decoration-none fw-semibold">
-            <i class="bi bi-box"></i> Products
-        </a>
+     
 
-        <a href="/admin/inventory"
-           class="d-flex align-items-center gap-2 p-2 rounded text-white text-decoration-none">
-            <i class="bi bi-archive"></i> Inventory
-        </a>
+    <!-- DASHBOARD -->
+    <button
+        class="nav-link active d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"
+        data-bs-toggle="tab"
+        data-bs-target="#dashboard"
+        type="button">
+        <i class="bi bi-grid"></i> Dashboard
+    </button>
 
-        <a href="/admin/orders"
-           class="d-flex align-items-center gap-2 p-2 rounded text-white text-decoration-none">
-            <i class="bi bi-receipt"></i> Orders
-        </a>
+    <!-- PRODUCTS -->
+    <button
+        class="nav-link d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"
+        data-bs-toggle="tab"
+        data-bs-target="#products"
+        type="button">
+        <i class="bi bi-box"></i> Products
+    </button>
 
-    </nav>
+    <!-- LINKS (unchanged) -->
+   <button
+        class="nav-link d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"
+        data-bs-toggle="tab"
+        data-bs-target="#inventory"
+        type="button">
+       <i class="bi bi-archive"></i> Inventory
+    </button>
+
+    <button
+        class="nav-link d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"
+        data-bs-toggle="tab"
+        data-bs-target="#orders"
+        type="button">
+       <i class="bi bi-receipt"></i> Orders
+    </button>
+
+</nav>
+
+
+  
 
     <!-- FOOTER -->
     <div class="p-3 border-top">

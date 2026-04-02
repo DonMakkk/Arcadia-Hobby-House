@@ -57,7 +57,7 @@
 
 <!-- ================= MAIN CONTENT ================= -->
 <main class="flex-grow-1 p-4">
-    HELLO WORLDDDDDDD
+    @yield('content')
 </main>
 
 <!-- Bootstrap JS -->
