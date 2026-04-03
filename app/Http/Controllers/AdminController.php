@@ -12,23 +12,25 @@ class AdminController extends Controller
 {
     
 //?--------------------------------------------------ADDING PRODUCT [DONE]--------------------------------------------------
-    public function addProduct(Request $request){
-    //    if(!Auth::check()){
-    //      return view('auth.login');
-    //    }
-        $validated = $request->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'category' => 'required',
-            'stock' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
+public function addProduct(Request $request)
+{
+    $validated = $request->validate([
+        'name' => 'required',
+        'price' => 'required|numeric',
+        'description' => 'required',
+        'category' => 'required',
+        'stock' => 'required|integer',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    if ($request->hasFile('image')) {
         $validated['image'] = $request->file('image')->store('products', 'public');
-        
-        Product::create($validated);
-        return redirect()->back()->with('message', 'Product added successfully');
     }
+
+    Product::create($validated);
+
+    return redirect()->back()->with('message', 'Product added successfully');
+}
 
 //!--------------------------------------------------SHOW ORDERS [IN PROGRESS]--------------------------------------------------
     public function showOrders(Request $request){
@@ -41,23 +43,24 @@ class AdminController extends Controller
     }
 
 //!--------------------------------------------------DASHBOARD PRODUCT [IN PROGRESS]--------------------------------------------------
-    public function dashboard(){
+public function dashboard(){
     //       if(!Auth::check()){
     //     return response()->json([
-    //         'message' => 'Unauthorized'
+    //             'message' => 'Unauthorized'
     //     ], 403);
     //    }
       $products =  Product::all();
-       return view('admin.pages.admin_products', compact('products'));
+       return view('admin.components.dashboard_component', compact('products'));
     }
 
 //?--------------------------------------------------UPDATE PRODUCT [DONE]--------------------------------------------------
-    public function updateProduct(Product $product, Request $request){
+    public function updateProduct(Product $product, Request $request, $id){
         if($request->user()->role !== 'admin'){
         return response()->json([
             'message' => 'Unauthorized'
         ], 403);
         }
+        
         $validated = $request->validate([
             'name' => 'required',
             'price' => 'required',
@@ -72,13 +75,14 @@ class AdminController extends Controller
 
 //?--------------------------------------------------REMOVE PRODUCT [DONE]--------------------------------------------------
     public function removeProduct(Product $product){
-           if($request->user()->role !== 'admin'){
-        return response()->json([
-            'message' => 'Unauthorized'
-        ], 403);
-       }
+    //        if($request->user()->role !== 'admin'){
+    //     return response()->json([
+    //         'message' => 'Unauthorized'
+    //     ], 403);
+    //    }
+       $product->cart()->delete();
        $product->delete();
-       return redirect()->back()->with('message', 'item removed successfully');
+       return redirect()->back();
     }
 //?--------------------------------------------------PUT PRODUCT TO REVENUE [DONE]--------------------------------------------------
     public function totalRevenue(Request $request){

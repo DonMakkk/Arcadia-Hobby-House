@@ -363,7 +363,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light top-navbar pe-2">
 <div class="container-fluid navbar-container">
 
-    <a class="navbar-brand d-flex align-items-center" href="route('home')">
+    <a class="navbar-brand d-flex align-items-center" href="{{route('home')}}">
         <img src="{{ asset('images/logo.png') }}?v=2" style="height:45px; margin-right:8px;">
         <div class="d-none d-lg-block">
             <div style="font-weight:bold;">Arcadia</div>

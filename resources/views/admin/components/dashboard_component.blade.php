@@ -1,7 +1,6 @@
 @extends('admin.layout.admin')
 
 @section('content')
-
 <div class="tab-content">
 
   <!-- DASHBOARD -->
@@ -29,7 +28,7 @@
                   </div>
                   <i class="bi bi-arrow-up-right text-primary"></i>
                 </div>
-                <h3 class="fw-bold text-dark">12</h3>
+                <h3 class="fw-bold text-dark">{{count($products)}}</h3>
                 <p class="fw-semibold mb-0">Total Products</p>
                 <small class="text-secondary">2 low stock</small>
               </div>
@@ -181,7 +180,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold text-primary">Inventory Management</h3>
-            <small class="text-muted">245 total products</small>
+            <small class="text-muted">{{count($products)}} total products</small>
         </div>
 
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">
@@ -203,63 +202,65 @@
 
             <!-- BODY -->
             <div class="modal-body">
-                <form>
+          <form method="POST" action="{{ route('addProduct') }}" enctype="multipart/form-data">
+    @csrf
 
-                    <div class="row g-3">
+    <div class="row g-3">
 
-                        <!-- NAME -->
-                        <div class="col-md-6">
-                            <label class="form-label">Product Name</label>
-                            <input type="text" class="form-control" placeholder="Enter product name">
-                        </div>
+        <!-- NAME -->
+        <div class="col-md-6">
+            <label class="form-label">Product Name</label>
+            <input type="text" name="name" class="form-control" placeholder="Enter product name">
+        </div>
 
-                        <!-- CATEGORY -->
-                        <div class="col-md-6">
-                            <label class="form-label">Category</label>
-                            <select class="form-select">
-                                <option selected disabled>Select category</option>
-                                <option>Board Games</option>
-                                <option>Trading Cards</option>
-                                <option>LEGO Sets</option>
-                                <option>Collectibles</option>
-                            </select>
-                        </div>
+        <!-- CATEGORY -->
+        <div class="col-md-6">
+            <label class="form-label">Category</label>
+            <select name="category" class="form-select">
+                <option selected disabled>Select category</option>
+                <option value="board games">Board Games</option>
+                <option value="trading cards">Trading Cards</option>
+                <option value="lego sets">LEGO Sets</option>
+                <option value="collectibles">Collectibles</option>
+            </select>
+        </div>
 
-                        <!-- PRICE -->
-                        <div class="col-md-6">
-                            <label class="form-label">Price</label>
-                            <input type="number" class="form-control" placeholder="0.00">
-                        </div>
+        <!-- PRICE -->
+        <div class="col-md-6">
+            <label class="form-label">Price</label>
+            <input type="number" name="price" class="form-control" placeholder="0.00">
+        </div>
 
-                        <!-- STOCK -->
-                        <div class="col-md-6">
-                            <label class="form-label">Stock</label>
-                            <input type="number" class="form-control" placeholder="0">
-                        </div>
+        <!-- STOCK -->
+        <div class="col-md-6">
+            <label class="form-label">Stock</label>
+            <input type="number" name="stock" class="form-control" placeholder="0">
+        </div>
 
-                        <!-- IMAGE -->
-                        <div class="col-12">
-                            <label class="form-label">Image URL</label>
-                            <input type="file" class="form-control" placeholder="https://example.com/image.jpg">
-                        </div>
+        <!-- IMAGE -->
+        <div class="col-12">
+            <label class="form-label">Image</label>
+            <input type="file" name="image" class="form-control">
+        </div>
 
-                        <!-- DESCRIPTION -->
-                        <div class="col-12">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" rows="3" placeholder="Enter product description"></textarea>
-                        </div>
+        <!-- DESCRIPTION -->
+        <div class="col-12">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="3"></textarea>
+        </div>
 
-                    </div>
+    </div>
 
-                </form>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" type="submit">Save Product</button>
+    </div>
+
+</form>
             </div>
 
             <!-- FOOTER -->
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary">Save Product</button>
-            </div>
-
+          
         </div>
     </div>
 </div>
@@ -301,58 +302,27 @@
 
                 <tbody>
 
-                    <!-- ROW -->
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-3">
-                                <img src="https://via.placeholder.com/40"
-                                     class="rounded" width="40" height="40">
-                                <span class="fw-semibold">Catan Board Game</span>
-                            </div>
-                        </td>
-
-                        <td>Board Games</td>
-                        <td class="fw-bold">$45.99</td>
-
-                        <td>
-                            <span class="badge bg-success-subtle text-success">
-                                15 units
-                            </span>
-                        </td>
-
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary">View</button>
-                            <button class="btn btn-sm btn-outline-primary">Edit</button>
-                            <button class="btn btn-sm btn-outline-danger">Delete</button>
-                        </td>
-                    </tr>
-
-                    <!-- ROW -->
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-3">
-                                <img src="https://via.placeholder.com/40"
-                                     class="rounded" width="40" height="40">
-                                <span class="fw-semibold">Pokemon Cards Pack</span>
-                            </div>
-                        </td>
-
-                        <td>Trading Cards</td>
-                        <td class="fw-bold">$12.50</td>
-
-                        <td>
-                            <span class="badge bg-warning-subtle text-warning">
-                                5 units
-                            </span>
-                        </td>
-
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary">View</button>
-                            <button class="btn btn-sm btn-outline-primary">Edit</button>
-                            <button class="btn btn-sm btn-outline-danger">Delete</button>
-                        </td>
-                    </tr>
-
+                <!-- ROW --> @foreach($products as $item) 
+                <tr> <td> 
+                    <div class="d-flex align-items-center gap-3"> 
+                        <img src="{{ asset('storage/' . $item->image) }}" class="rounded" width="40" height="40">
+                         <span class="fw-semibold">{{$item->name}}</span>
+                         </div>
+                         </td> 
+                         <td>{{$item->category}}</td>
+                         <td class="fw-bold">₱{{$item->price}}</td>
+                          <td> <span class="badge bg-success-subtle text-success"> {{$item->stock}} units </span> </td>
+                           <td>
+                             <button class="btn btn-sm btn-outline-secondary">View</button> 
+                            <button class="btn btn-sm btn-outline-primary">Edit</button> 
+                            <form action="{{route('admin.removeProduct', $item->id)}}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button> 
+                            </form>
+                        </td> 
+                        </tr>
+                        @endforeach
                 </tbody>
 
             </table>
