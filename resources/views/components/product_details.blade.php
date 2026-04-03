@@ -209,9 +209,18 @@
             <button class="btn btn-sm" id="plusBtn">+</button>
           </div>
 
-          <button class="btn btn-outline-danger">
-            <i class="bi bi-heart-fill"></i>
-          </button>
+          <form method="POST" action="{{ route('addToFavorite', $product->id) }}" style="display:inline;">
+            @csrf
+            @if($favorite)
+            <button class="btn btn-outline-danger" type="submit">
+              <i class="bi bi-heart-fill text-danger"></i>
+            </button>
+            @else
+            <button class="btn btn-outline-danger" type="submit">
+              <i class="bi bi-heart"></i>
+            </button>
+            @endif
+          </form>
         </div>
 
         <!-- buy now and add to cart -->

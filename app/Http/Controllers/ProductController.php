@@ -43,7 +43,21 @@ class ProductController extends Controller
     public function show(Product $product, $category)
     {
         //
+         $favorite = Favorite::where('user_id', Auth::id())
+        ->where('product_id', $product)
+        ->first();
+
+    if ($favorite) {
+        $favorite->delete(); // unlike
+    } else {
+        Favorite::create([
+            'user_id' => Auth::id(),
+            'product_id' => $product
+        ]);
+    }
+
         $sortedByCategory = Product::where('category', $category)->get();
+
         return view('pages.category_page', compact('sortedByCategory'));
     }
 
@@ -74,6 +88,7 @@ class ProductController extends Controller
    public function product_details($id){
         $product = Product::find($id);
         $suggestions = Product::latest()->take(4)->get();
-        return view('pages.product_detail', compact('product','suggestions'));
+        $favorite = Favorite::where('user_id', Auth::id())->where('product_id', $id)->exists();
+        return view('pages.product_detail', compact('product','suggestions', 'favorite'));
    }
 }
