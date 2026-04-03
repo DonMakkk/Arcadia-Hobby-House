@@ -4,7 +4,7 @@
 <div class="tab-content">
 
   <!-- DASHBOARD -->
-  <div class="tab-pane fade show active" id="dashboard">
+  <div class="tab-pane fade " id="dashboard">
 
     <div class="container-fluid">
 
@@ -169,184 +169,255 @@
     </div>
 
   </div>
+<!-- PRODUCTS TAB -->
+<div class="tab-pane fade show active" id="products">
+  <div class="container-fluid">
 
-  <!-- PRODUCTS TAB -->
-  <div class="tab-pane fade" id="products">
-    <div class="container-fluid">
-      <!-- MAIN CONTENT (Bootstrap 5) -->
-<div class="container-fluid p-4" style="background:#F1F5F9; min-height:100vh;">
+    <div class="container-fluid p-4" style="background:#F1F5F9; min-height:100vh;">
 
-    <!-- HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+      <!-- HEADER -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h3 class="fw-bold text-primary">Inventory Management</h3>
-            <small class="text-muted">{{count($products)}} total products</small>
+          <h3 class="fw-bold text-primary">Inventory Management</h3>
+          <small class="text-muted">{{ count($products) }} total products</small>
         </div>
 
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">
-    + Add Product
-</button>
-    </div>
+          + Add Product
+        </button>
+      </div>
 
+      <!-- ADD MODAL -->
+      <div class="modal fade" id="addProductModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
 
- <!-- Modal -->
-<div class="modal fade" id="addProductModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- HEADER -->
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Add New Product</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              <h5 class="modal-title fw-bold">Add New Product</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <!-- BODY -->
             <div class="modal-body">
-          <form method="POST" action="{{ route('addProduct') }}" enctype="multipart/form-data">
-    @csrf
+              <form method="POST" action="{{ route('addProduct') }}" enctype="multipart/form-data">
+                @csrf
 
-    <div class="row g-3">
+                <div class="row g-3">
 
-        <!-- NAME -->
-        <div class="col-md-6">
-            <label class="form-label">Product Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Enter product name">
-        </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" name="name" class="form-control">
+                  </div>
 
-        <!-- CATEGORY -->
-        <div class="col-md-6">
-            <label class="form-label">Category</label>
-            <select name="category" class="form-select">
-                <option selected disabled>Select category</option>
-                <option value="board games">Board Games</option>
-                <option value="trading cards">Trading Cards</option>
-                <option value="lego sets">LEGO Sets</option>
-                <option value="collectibles">Collectibles</option>
-            </select>
-        </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Category</label>
+                    <select name="category" class="form-select">
+                      <option disabled selected>Select category</option>
+                      <option value="board games">Board Games</option>
+                      <option value="trading cards">Trading Cards</option>
+                      <option value="lego sets">LEGO Sets</option>
+                      <option value="collectibles">Collectibles</option>
+                    </select>
+                  </div>
 
-        <!-- PRICE -->
-        <div class="col-md-6">
-            <label class="form-label">Price</label>
-            <input type="number" name="price" class="form-control" placeholder="0.00">
-        </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Price</label>
+                    <input type="number" name="price" class="form-control">
+                  </div>
 
-        <!-- STOCK -->
-        <div class="col-md-6">
-            <label class="form-label">Stock</label>
-            <input type="number" name="stock" class="form-control" placeholder="0">
-        </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Stock</label>
+                    <input type="number" name="stock" class="form-control">
+                  </div>
 
-        <!-- IMAGE -->
-        <div class="col-12">
-            <label class="form-label">Image</label>
-            <input type="file" name="image" class="form-control">
-        </div>
+                  <div class="col-12">
+                    <label class="form-label">Image</label>
+                    <input type="file" name="image" class="form-control">
+                  </div>
 
-        <!-- DESCRIPTION -->
-        <div class="col-12">
-            <label class="form-label">Description</label>
-            <textarea name="description" class="form-control" rows="3"></textarea>
-        </div>
+                  <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="3"></textarea>
+                  </div>
 
-    </div>
+                </div>
 
-    <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary" type="submit">Save Product</button>
-    </div>
+                <div class="modal-footer">
+                  <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button class="btn btn-primary" type="submit">Save Product</button>
+                </div>
 
-</form>
+              </form>
             </div>
 
-            <!-- FOOTER -->
-          
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
-    <!-- FILTERS -->
-    <div class="d-flex gap-2 mb-3 flex-wrap">
+      <!-- FILTERS -->
+      <div class="d-flex gap-2 mb-3 flex-wrap">
         <input type="text" class="form-control w-auto" placeholder="Search products...">
 
         <select class="form-select w-auto">
-            <option>All Categories</option>
-            <option>Board Games</option>
-            <option>Trading Cards</option>
-            <option>LEGO Sets</option>
-            <option>Collectibles</option>
+          <option>All Categories</option>
+          <option>Board Games</option>
+          <option>Trading Cards</option>
+          <option>LEGO Sets</option>
+          <option>Collectibles</option>
         </select>
 
         <select class="form-select w-auto">
-            <option>Sort by Name</option>
-            <option>Sort by Price</option>
+          <option>Sort by Name</option>
+          <option>Sort by Price</option>
         </select>
 
         <button class="btn btn-outline-primary">Filter</button>
-    </div>
+      </div>
 
-    <!-- TABLE -->
-    <div class="card border-0 shadow-sm">
+      <!-- TABLE -->
+      <div class="card border-0 shadow-sm">
         <div class="table-responsive">
-            <table class="table align-middle mb-0">
+          <table class="table align-middle mb-0">
 
-                <thead class="table-light">
-                    <tr>
-                        <th>Product</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Stock</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+            <thead class="table-light">
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-                <tbody>
+            <tbody>
 
-                <!-- ROW --> @foreach($products as $item) 
-                <tr> <td> 
-                    <div class="d-flex align-items-center gap-3"> 
-                        <img src="{{ asset('storage/' . $item->image) }}" class="rounded" width="40" height="40">
-                         <span class="fw-semibold">{{$item->name}}</span>
-                         </div>
-                         </td> 
-                         <td>{{$item->category}}</td>
-                         <td class="fw-bold">₱{{$item->price}}</td>
-                          <td> <span class="badge bg-success-subtle text-success"> {{$item->stock}} units </span> </td>
-                           <td>
-                             <button class="btn btn-sm btn-outline-secondary">View</button> 
-                            <button class="btn btn-sm btn-outline-primary">Edit</button> 
-                            <form action="{{route('admin.removeProduct', $item->id)}}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button> 
-                            </form>
-                        </td> 
-                        </tr>
-                        @endforeach
-                </tbody>
+              @foreach($products as $item)
+              <tr>
 
-            </table>
+                <td>
+                  <div class="d-flex align-items-center gap-3">
+                    <img src="{{ asset('storage/' . $item->image) }}" width="40" height="40" class="rounded">
+                    <span class="fw-semibold">{{ $item->name }}</span>
+                  </div>
+                </td>
+
+                <td>{{ $item->category }}</td>
+                <td class="fw-bold">₱{{ $item->price }}</td>
+                <td>
+                  <span class="badge bg-success-subtle text-success">
+                    {{ $item->stock }} units
+                  </span>
+                </td>
+
+                <td>
+
+                  <button class="btn btn-sm btn-outline-secondary">View</button>
+
+                  <!-- EDIT BUTTON -->
+                  <button class="btn btn-sm btn-outline-primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editModal{{ $item->id }}">
+                    Edit
+                  </button>
+
+                  <form action="{{ route('admin.removeProduct', $item->id) }}"
+                        method="POST"
+                        class="d-inline">
+                    @csrf
+                    @method('DELETE')
+
+                    <button class="btn btn-sm btn-outline-danger" type="submit">
+                      Delete
+                    </button>
+                  </form>
+
+                  <!-- EDIT MODAL -->
+                  <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <h5 class="modal-title fw-bold">Update Product</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                          <form method="POST"
+                                action="{{ route('updateProduct', $item->id) }}"
+                                enctype="multipart/form-data">
+
+                            @csrf
+                            @method('PUT')
+
+                            <div class="row g-3">
+
+                              <div class="col-md-6">
+                                <label class="form-label">Product Name</label>
+                                <input type="text" name="name" class="form-control"
+                                       value="{{ $item->name }}">
+                              </div>
+
+                              <div class="col-md-6">
+                                <label class="form-label">Category</label>
+                                <select name="category" class="form-select">
+                                  <option value="board games" {{ $item->category == 'board games' ? 'selected' : '' }}>Board Games</option>
+                                  <option value="trading cards" {{ $item->category == 'trading cards' ? 'selected' : '' }}>Trading Cards</option>
+                                  <option value="lego sets" {{ $item->category == 'lego sets' ? 'selected' : '' }}>LEGO Sets</option>
+                                  <option value="collectibles" {{ $item->category == 'collectibles' ? 'selected' : '' }}>Collectibles</option>
+                                </select>
+                              </div>
+
+                              <div class="col-md-6">
+                                <label class="form-label">Price</label>
+                                <input type="number" name="price" class="form-control"
+                                       value="{{ $item->price }}">
+                              </div>
+
+                              <div class="col-md-6">
+                                <label class="form-label">Stock</label>
+                                <input type="number" name="stock" class="form-control"
+                                       value="{{ $item->stock }}">
+                              </div>
+
+                              <div class="col-12">
+                                <label class="form-label">Change Image (optional)</label>
+                                <input type="file" name="image" class="form-control">
+                              </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                              </button>
+                              <button type="submit" class="btn btn-primary">
+                                Update Product
+                              </button>
+                            </div>
+
+                          </form>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </td>
+
+              </tr>
+              @endforeach
+
+            </tbody>
+
+          </table>
         </div>
-    </div>
+      </div>
 
-    <!-- PAGINATION -->
-    <div class="d-flex justify-content-between align-items-center mt-3">
-        <small>Showing 1–10 of 245</small>
-
-        <nav>
-            <ul class="pagination mb-0">
-                <li class="page-item"><a class="page-link">Prev</a></li>
-                <li class="page-item active"><a class="page-link">1</a></li>
-                <li class="page-item"><a class="page-link">2</a></li>
-                <li class="page-item"><a class="page-link">Next</a></li>
-            </ul>
-        </nav>
-    </div>
-
-</div>
     </div>
   </div>
-  
+</div>
+        
 {{-- Orders --}}
    <div class="tab-pane fade" id="orders">
     <div class="container-fluid">

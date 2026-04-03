@@ -14,6 +14,11 @@ class AdminController extends Controller
 //?--------------------------------------------------ADDING PRODUCT [DONE]--------------------------------------------------
 public function addProduct(Request $request)
 {
+      if($request->user()->role !== 'admin'){
+        return response()->json([
+            'message' => 'Unauthorized'
+        ], 403);
+       }
     $validated = $request->validate([
         'name' => 'required',
         'price' => 'required|numeric',
@@ -44,34 +49,40 @@ public function addProduct(Request $request)
 
 //!--------------------------------------------------DASHBOARD PRODUCT [IN PROGRESS]--------------------------------------------------
 public function dashboard(){
-    //       if(!Auth::check()){
-    //     return response()->json([
-    //             'message' => 'Unauthorized'
-    //     ], 403);
-    //    }
+          if(!Auth::check()){
+        return response()->json([
+                'message' => 'Unauthorized'
+        ], 403);
+       }
       $products =  Product::all();
        return view('admin.components.dashboard_component', compact('products'));
     }
 
 //?--------------------------------------------------UPDATE PRODUCT [DONE]--------------------------------------------------
-    public function updateProduct(Product $product, Request $request, $id){
-        if($request->user()->role !== 'admin'){
+
+public function updateProduct(Request $request, Product $product){
+    if($request->user()->role !== 'admin'){
         return response()->json([
             'message' => 'Unauthorized'
         ], 403);
-        }
-        
-        $validated = $request->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'stock' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-        $validated['image'] = $request->file('image')->store('products', 'public');
-        $product->update($validated);
-        return redirect()->back()->with('message', 'Product updated successfully');
     }
+
+    $validated = $request->validate([
+        'name' => 'sometimes|required',
+        'price' => 'sometimes|required',
+        'description' => 'sometimes|required',
+        'stock' => 'sometimes|required',
+        'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    if ($request->hasFile('image')) {
+        $validated['image'] = $request->file('image')->store('products', 'public');
+    }
+
+    $product->update($validated);
+
+    return redirect()->back()->with('message', 'Product updated successfully');
+}
 
 //?--------------------------------------------------REMOVE PRODUCT [DONE]--------------------------------------------------
     public function removeProduct(Product $product){

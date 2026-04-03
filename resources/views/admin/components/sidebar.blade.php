@@ -39,26 +39,24 @@
         <!-- DASHBOARD -->
     <nav class="nav flex-column p-2 flex-grow-1">
 
-     
-
-    <!-- DASHBOARD -->
+         <!-- PRODUCTS -->
     <button
         class="nav-link active d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"
-        data-bs-toggle="tab"
-        data-bs-target="#dashboard"
-        type="button">
-        <i class="bi bi-grid"></i> Dashboard
-    </button>
-
-    <!-- PRODUCTS -->
-    <button
-        class="nav-link d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"
         data-bs-toggle="tab"
         data-bs-target="#products"
         type="button">
         <i class="bi bi-archive"></i> Inventory
     </button>
 
+
+    <!-- DASHBOARD -->
+    <button
+        class="nav-link  d-flex align-items-center gap-2 p-2 rounded text-white text-start border-0 bg-transparent"
+        data-bs-toggle="tab"
+        data-bs-target="#dashboard"
+        type="button">
+        <i class="bi bi-grid"></i> Dashboard
+    </button>
     
 
     <button

@@ -15,7 +15,7 @@
         <div class="card border-0 shadow-sm product-card h-100" style="border:1px solid #DBEAFE; border-radius:16px; overflow:hidden; min-height:200px;">
   <!-- Image -->
   <div class="position-relative overflow-hidden">
-    <a href="/product/1">
+    <a  href="{{ route('product_detail', $product->id) }}">
       <img src="{{ asset('storage/' . $product->image) }}"
            class="card-img-top"
            style="height:250px; object-fit:cover; transition:0.3s;">
