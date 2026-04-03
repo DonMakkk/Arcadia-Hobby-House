@@ -14,10 +14,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="d-flex flex-column flex-md-row min-vh-100">
+<body class="d-flex flex-column flex-md-row min-vh-100 overflow-hidden">
 
 <!-- ================= DESKTOP SIDEBAR ================= -->
-<aside class="d-none d-md-block vh-100" style="width:250px;">
+<aside class="d-none d-md-block" style="width:250px; height:100vh;">
     @include('admin.components.sidebar')
 </aside>
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FavoriteController;
 
 //Auth Routes
 Route::get('/', [ProductController::class, 'index'])->name('home');
@@ -27,6 +28,7 @@ Route::prefix('user')->group(function(){
 Route::post('/cart/{id}/decrease', [UserController::class, 'decrease'])->name('cart.decrease');
 Route::delete('/cart/{id}', [UserController::class, 'remove'])->name('cart.remove');
     Route::match(['GET', 'POST'], '/addToCart/{id}', [UserController::class, 'addToCart'])->name('addToCart.addToCart');
+    Route::match(['GET', 'POST'], '/addToFavorite/{productId}', [FavoriteController::class, 'store'])->name('addToFavorite');
     Route::get('/category/{category}', [ProductController::class, 'show'])->name('category.show');
   
     Route::get('/navigate/{section}', [UserController::class, 'navigate'])->name('navigate');

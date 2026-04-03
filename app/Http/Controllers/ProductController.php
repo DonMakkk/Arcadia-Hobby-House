@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\Favorite;
 use Illuminate\Routing\Controller\HasMiddleware;
 use Illuminate\Routing\Controller\Middleware;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller 
 {
     /**
@@ -18,8 +19,9 @@ class ProductController extends Controller
     {
       $products = Product::take(7)->get();
       $newProduct = Product::latest()->take(5)->get();
-
-      return view('pages.home',compact('products', 'newProduct'));
+      $favorites = Favorite::where('user_id', Auth::id())->pluck('product_id');
+      $wishlist = Product::whereIn('id', $favorites)->get();
+      return view('pages.home', compact('products', 'newProduct', 'wishlist', 'favorites'));
     }
 
     public function products(){

@@ -90,7 +90,7 @@
 
     <div class="row g-3">
 
-      @foreach($product as $item)
+      @foreach($wishlist as $item)
 
         <div class="col-12 col-md-6 col-lg-4">
 

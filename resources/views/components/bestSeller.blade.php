@@ -28,9 +28,13 @@
     </div>
 
     <!-- Heart -->
-    <button class="position-absolute top-0 end-0 m-2 btn btn-light rounded-circle shadow-sm ">
-      <i class="bi bi-heart-fill text-secondary"></i>
+    <form action="{{route('addToFavorite', $product->id)}}" method="POST">
+      @csrf
+    <button class="position-absolute top-0 end-0 m-2 btn btn-light rounded-circle shadow-sm " type="submit">
+      
+  <i class="bi bi-heart-fill {{ $favorites->contains($product->id) ? 'text-danger' : 'text-secondary' }}"></i>
     </button>
+  </form>
   </div>
 
   <!-- Content -->

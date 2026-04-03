@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Favorite;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -174,8 +175,10 @@ class UserController extends Controller
             $user = Auth::user();
             $cart = Cart::where('user_id', Auth::id())->get();
             $product_ids = $cart->pluck('product_id');
+            $favorites = Favorite::where('user_id', Auth::id())->pluck('product_id');
+            $wishlist = Product::whereIn('id', $favorites)->get();
             $product = Product::whereIn('id', $product_ids)->get();
-            return view('pages.profile_content', compact('user', 'cart', 'product'));
+            return view('pages.profile_content', compact('user', 'cart', 'product', 'wishlist'));
         }
         
   public function showCartPage(){

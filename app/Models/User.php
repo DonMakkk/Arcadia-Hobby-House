@@ -29,6 +29,9 @@ class User extends Authenticatable
     public function carts(){
         return $this->hasMany(Cart::class);
     }
+       public function favorite(){
+        return $this->hasMany(Favorite::class);
+    }
     public function isAdmin(){
         return $this->role === 'admin';
     }
