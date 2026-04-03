@@ -310,7 +310,11 @@
 
                 <td>
 
-                  <button class="btn btn-sm btn-outline-secondary">View</button>
+                  <button class="btn btn-sm btn-outline-secondary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewModal{{ $item->id }}">
+                    View
+                  </button>
 
                   <!-- EDIT BUTTON -->
                   <button class="btn btn-sm btn-outline-primary"
@@ -319,16 +323,11 @@
                     Edit
                   </button>
 
-                  <form action="{{ route('admin.removeProduct', $item->id) }}"
-                        method="POST"
-                        class="d-inline">
-                    @csrf
-                    @method('DELETE')
-
-                    <button class="btn btn-sm btn-outline-danger" type="submit">
-                      Delete
-                    </button>
-                  </form>
+                  <button class="btn btn-sm btn-outline-danger"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteModal{{ $item->id }}">
+                    Delete
+                  </button>
 
                   <!-- EDIT MODAL -->
                   <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1">
@@ -397,6 +396,64 @@
 
                           </form>
 
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- VIEW MODAL -->
+                  <div class="modal fade" id="viewModal{{ $item->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <h5 class="modal-title fw-bold">Product Details</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-8">
+                              <h5>{{ $item->name }}</h5>
+                              <p><strong>Category:</strong> {{ $item->category }}</p>
+                              <p><strong>Price:</strong> ₱{{ $item->price }}</p>
+                              <p><strong>Stock:</strong> {{ $item->stock }}</p>
+                              <p><strong>Description:</strong> {{ $item->description }}</p>
+                              <button class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">Edit Product</button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- DELETE MODAL -->
+                  <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <h5 class="modal-title fw-bold">Confirm Delete</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                          <p>Are you sure you want to delete "{{ $item->name }}"?</p>
+                          <p class="text-muted">This action cannot be undone.</p>
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <form method="POST" action="{{ route('admin.removeProduct', $item->id) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                          </form>
                         </div>
 
                       </div>

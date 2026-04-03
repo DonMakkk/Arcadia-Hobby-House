@@ -10,23 +10,34 @@
       </div>
     </div>
 
-    <!-- FIXED ROW -->
     <div class="row px-2 px-md-5 pb-5">
 
       @foreach($newProduct as $product)
 
-      <!-- FIXED COLUMN -->
       <div class="col-12 col-md-4 col-lg-3 mb-4">
- 
+
         <div class="card border-0 shadow-sm product-card h-100"
              style="border:1px solid #DBEAFE; border-radius:16px; overflow:hidden;">
 
-          <!-- IMAGE -->
-          <a href="{{ route('product_detail', $product->id) }}">
-            <img src="{{ asset('storage/' . $product->image) }}"
-                 class="card-img-top"
-                 style="height:250px; object-fit:cover;">
-          </a>
+          <!-- IMAGE + HEART -->
+          <div class="position-relative overflow-hidden">
+
+            <a href="{{ route('product_detail', $product->id) }}">
+              <img src="{{ asset('storage/' . $product->image) }}"
+                   class="card-img-top"
+                   style="height:250px; object-fit:cover;">
+            </a>
+
+            <!-- ❤️ HEART BUTTON -->
+            <form action="{{ route('addToFavorite', $product->id) }}" method="POST">
+              @csrf
+              <button type="submit"
+                      class="position-absolute top-0 end-0 m-2 btn btn-light rounded-circle shadow-sm">
+                <i class="bi bi-heart-fill {{ $favorites->contains($product->id) ? 'text-danger' : 'text-secondary' }}"></i>
+              </button>
+            </form>
+
+          </div>
 
           <!-- CONTENT -->
           <div class="card-body d-flex flex-column">
@@ -56,8 +67,9 @@
             </div>
 
           </div>
+
         </div>
- </a>
+
       </div>
 
       @endforeach

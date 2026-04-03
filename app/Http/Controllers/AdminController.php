@@ -92,6 +92,7 @@ public function updateProduct(Request $request, Product $product){
     //     ], 403);
     //    }
        $product->cart()->delete();
+       $product->favorites()->delete();
        $product->delete();
        return redirect()->back();
     }
