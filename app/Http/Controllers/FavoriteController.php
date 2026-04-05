@@ -20,7 +20,10 @@ class FavoriteController extends Controller
      * Store a newly created resource in storage.
      */
     public function store($productId)
-{
+{    
+    if(!Auth::check()){
+        return view('auth.login');
+    }
     $favorite = Favorite::where('user_id', Auth::id())
         ->where('product_id', $productId)
         ->first();
