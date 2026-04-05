@@ -18,4 +18,8 @@ class Product extends Model
     public function favorites(){
         return $this->hasMany(Favorite::class);
     }
+
+    public function order(){
+        return $this->hasMany(Order::class);
+    }
 }

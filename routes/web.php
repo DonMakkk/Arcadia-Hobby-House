@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\OrderController;
 
 //Auth Routes
 Route::get('/', [ProductController::class, 'index'])->name('home');
@@ -30,7 +31,7 @@ Route::delete('/cart/{id}', [UserController::class, 'remove'])->name('cart.remov
     Route::match(['GET', 'POST'], '/addToCart/{id}', [UserController::class, 'addToCart'])->name('addToCart.addToCart');
     Route::match(['GET', 'POST'], '/addToFavorite/{productId}', [FavoriteController::class, 'store'])->name('addToFavorite');
     Route::get('/category/{category}', [ProductController::class, 'show'])->name('category.show');
-  
+     Route::post('/buy', [OrderController::class, 'store'])->name('buy');
     Route::get('/navigate/{section}', [UserController::class, 'navigate'])->name('navigate');
 });
 

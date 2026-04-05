@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Cart;
+use App\Models\Favorite;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -19,9 +24,39 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrderRequest $request)
+    public function store(Request $request)
     {
         //
+        if(!Auth::check()){
+            return view('auth.login');
+        }
+        $selectedItem = $request->input('selected_items', []);
+        if(!$selectedItem){
+              return back()->withErrors([
+                'message' => 'No product is selected',
+            ])->withInput();
+        }
+       $userCheckOut = Cart::whereIn('id', $selectedItem)->get();
+        
+        foreach ($userCheckOut as $item){
+        Order::create([
+            'user_id' => Auth::id(),
+            'product_id' => $item->product_id,
+            'quantity' => $item->quantity,
+            'price' => $item->product->price * $item->quantity,
+            'status' => 'pending'
+        ]);
+        $item->delete();
+        }
+            $user = Auth::user();
+            $cart = Cart::where('user_id', Auth::id())->get();
+            $product_ids = $cart->pluck('product_id');
+            $favorites = Favorite::where('user_id', Auth::id())->pluck('product_id');
+            $wishlist = Product::whereIn('id', $favorites)->get();
+            $product = Order::where('user_id', Auth::id())->get();
+          
+            return view('pages.profile_content', compact('user','cart', 'product', 'wishlist'));
+       
     }
 
     /**

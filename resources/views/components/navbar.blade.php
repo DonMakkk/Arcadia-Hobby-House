@@ -415,7 +415,7 @@
                             <li><a class="dropdown-item" href="{{route('category.show','collectibles')}}">Collectibles</a></li>
                             <li><a class="dropdown-item" href="{{route('category.show','puzzles')}}">Puzzles</a></li>
                             <li><a class="dropdown-item" href="{{route('category.show','art supplies')}}">Art Supplies</a></li>
-                            <li><a class="dropdown-item" href="{{route('category.show','all categories')}}">All Categories</a></li>
+                            <li><a class="dropdown-item" href="{{route('category.show','all')}}">All Categories</a></li>
                 </ul>
             </div>
 
@@ -450,6 +450,7 @@
                 <a href="{{route('category.show','collectibles')}}"  class="btn category-chip">⭐ Collectibles</a >
                 <a href="{{route('category.show','collectibles')}}"  class="btn category-chip">🧩 Puzzles</a >
                 <a href="{{route('category.show','collectibles')}}"  class="btn category-chip">🎨 Art Supplies</a >
+                  
             </div>
 
         </div>

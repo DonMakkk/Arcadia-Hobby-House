@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Favorite;
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Middleware\AdminMiddleware;
@@ -177,7 +178,8 @@ class UserController extends Controller
             $product_ids = $cart->pluck('product_id');
             $favorites = Favorite::where('user_id', Auth::id())->pluck('product_id');
             $wishlist = Product::whereIn('id', $favorites)->get();
-            $product = Product::whereIn('id', $product_ids)->get();
+            $product = Order::where('id', Auth::id())->get();
+          
             return view('pages.profile_content', compact('user', 'cart', 'product', 'wishlist'));
         }
         
@@ -193,12 +195,15 @@ class UserController extends Controller
     }
     // Get products + match quantities
     $products = Product::whereIn('id', $product_ids)->get();
-
     // FIXED: Total = price × matching cart quantity
-    $total = $products->sum(function($product) use ($cart) {
-        $quantity = $cart->where('product_id', $product->id)->first()->quantity ?? 1;
-        return $product->price * $quantity;
-    });
+      $total = 0;
+    foreach ($products as $product) {
+        $cartItem = $cart->firstWhere('product_id', $product->id);
+        $quantity = $cartItem->quantity ?? 1;
+        $total += $product->price * $quantity;
+    }
+    //ADD PRICE FOR EACH PRODUCT TOTAL
+    
     return view('pages.cart_page', compact('cart', 'products', 'total'));
 }
 

@@ -64,6 +64,7 @@
         <i class="bi bi-cart text-light"></i>
         </button>
       </form>
+      
     </div>
 
   </div>
