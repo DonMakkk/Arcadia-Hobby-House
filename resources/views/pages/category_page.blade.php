@@ -37,11 +37,15 @@
             @endif
           </div>
           {{-- Heart --}}
-          <button class="position-absolute top-0 end-0 m-2 btn btn-light rounded-circle shadow-sm">
-            <i class="bi bi-heart text-secondary"></i>
-          </button>
+         <form action="{{route('addToFavorite', $product->id)}}" method="POST">
+      @csrf
+    <button class="position-absolute top-0 end-0 m-2 btn btn-light rounded-circle shadow-sm " type="submit">
+      
+  <i class="bi bi-heart-fill {{ $favorites->contains($product->id) ? 'text-danger' : 'text-secondary' }}"></i>
+    </button>
+  </form>
         </div>
-        {{-- Content --}}
+        {{-- Contenon t --}}
         <div class="card-body d-flex flex-column p-3">
           {{-- Category --}}
           <div class="small mb-1 fw-medium" style="color:#3B82F6;">{{ $product->category }}</div>

@@ -201,6 +201,7 @@ class UserController extends Controller
         $cartItem = $cart->firstWhere('product_id', $product->id);
         $quantity = $cartItem->quantity ?? 1;
         $total += $product->price * $quantity;
+        
     }
     //ADD PRICE FOR EACH PRODUCT TOTAL
     

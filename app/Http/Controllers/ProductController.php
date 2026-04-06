@@ -51,7 +51,9 @@ class ProductController extends Controller
         else{
           $sortedByCategory = Product::where('category', $category)->get();
         }
-        return view('pages.category_page', compact('sortedByCategory'));
+        $wishlist = Favorite::where('user_id', Auth::id())->pluck('product_id');
+        $favorites = Product::whereIn('id', $wishlist)->get();
+        return view('pages.category_page', compact('sortedByCategory', 'favorites'));
     }
 
     /**

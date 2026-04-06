@@ -24,7 +24,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
         //
         if(!Auth::check()){
@@ -46,7 +46,10 @@ class OrderController extends Controller
             'price' => $item->product->price * $item->quantity,
             'status' => 'pending'
         ]);
+        // $product->stock = $product->stock - $item->quantity;
+        // $product->save();
         $item->delete();
+       
         }
             $user = Auth::user();
             $cart = Cart::where('user_id', Auth::id())->get();
