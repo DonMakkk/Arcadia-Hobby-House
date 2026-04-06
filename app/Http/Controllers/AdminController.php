@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Revenue;
 class AdminController extends Controller
 {
@@ -24,13 +25,14 @@ public function addProduct(Request $request)
         'price' => 'required|numeric',
         'description' => 'required',
         'category' => 'required',
-        'stock' => 'required|integer',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        'stock' => 'required|integer|required',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048|required'
     ]);
 
     if ($request->hasFile('image')) {
         $validated['image'] = $request->file('image')->store('products', 'public');
     }
+    
 
     Product::create($validated);
 
@@ -93,6 +95,7 @@ public function updateProduct(Request $request, Product $product){
     //    }
        $product->cart()->delete();
        $product->favorites()->delete();
+       $product->order()->delete();
        $product->delete();
        return redirect()->back();
     }

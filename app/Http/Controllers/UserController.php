@@ -38,31 +38,32 @@ class UserController extends Controller
         }
     }
 
-    public function addToCart($id)
-    {
-        // Sends the products in cart
-         if(!Auth::check()){
-            return view('auth.login');
-        }
-        $user = Auth::user();
-        $product = Product::find($id);
-          if (!$product) {
-        return response()->json([
-            'message' => 'Product not found'
-        ], 404);
-    }
-        $cart = Cart::where('user_id', $user->id)->where('product_id', $id)->first();
-        if($cart){
-            $cart->increment('quantity');
-        }else{
-        $insertToCart = Cart::create([ 'user_id' => $user->id,
-        'product_id'=>  $product->id,
-        'quantity' => 1,
-        'status' => 'in progress']);
-        }
-         return redirect()->back();
+  
+public function addToCart($id)
+{
+    if (!Auth::check()) {
+        return response()->json(['message' => 'Login required'], 401);
     }
 
+    $user = Auth::user();
+    $product = Product::find($id);
+
+    if (!$product) {
+        return response()->json(['message' => 'Product not found'], 404);
+    }
+
+    $cart = Cart::firstOrCreate(
+        ['user_id' => $user->id, 'product_id' => $id],
+        ['quantity' => 0, 'status' => 'in progress']
+    );
+
+    $cart->increment('quantity');
+
+    return response()->json([
+        'success' => true,
+        'cart_count' => Cart::where('user_id', $user->id)->count()
+    ]);
+}
     public function update(UpdateUserRequest $request, User $user)
     {
         //
@@ -178,9 +179,9 @@ class UserController extends Controller
             $product_ids = $cart->pluck('product_id');
             $favorites = Favorite::where('user_id', Auth::id())->pluck('product_id');
             $wishlist = Product::whereIn('id', $favorites)->get();
-            $product = Order::where('id', Auth::id())->get();
+            $product = Order::where('user_id', Auth::id())->get();
           
-            return view('pages.profile_content', compact('user', 'cart', 'product', 'wishlist'));
+            return view('pages.profile_content', compact('user', 'product', 'wishlist'));
         }
         
   public function showCartPage(){

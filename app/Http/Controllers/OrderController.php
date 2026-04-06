@@ -46,8 +46,7 @@ class OrderController extends Controller
             'price' => $item->product->price * $item->quantity,
             'status' => 'pending'
         ]);
-        // $product->stock = $product->stock - $item->quantity;
-        // $product->save();
+       $item->product->stock -= $item->quantity;
         $item->delete();
        
         }

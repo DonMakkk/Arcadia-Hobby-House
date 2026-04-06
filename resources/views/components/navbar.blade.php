@@ -148,7 +148,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 3em;
+  padding-top: 3.5em;
   width: 36px;
   height: 36px;
   border-radius: 50%;

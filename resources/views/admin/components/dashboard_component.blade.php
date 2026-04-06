@@ -173,7 +173,7 @@
 <div class="tab-pane fade show active" id="products">
   <div class="container-fluid">
 
-    <div class="container-fluid p-4" style="background:#F1F5F9; min-height:100vh;">
+    <class="container-fluid p-4" style="background:#F1F5F9; min-height:100vh;">
 
       <!-- HEADER -->
       <div class="d-flex justify-content-between align-items-center mb-4">
@@ -253,25 +253,44 @@
         </div>
       </div>
 
+
+      <!-- AFTER (fixed) -->
+<div class="d-flex gap-2 mb-3 flex-wrap align-items-start">
+
+  <div class="position-relative">
+    <input type="text" id="searchInput" class="form-control" placeholder="Search products..." style="min-width:220px;">
+    <div id="suggestions"
+         class="position-absolute bg-white border rounded shadow-sm d-none"
+         style="z-index:999; min-width:250px; top:100%; left:0; margin-top:4px;">
+    </div>
+  </div>
+
+  
+ <select id="categoryFilter" class="form-select w-auto">
+  <option value="">All Categories</option>
+  <option value="board games">Board Games</option>
+  <option value="trading cards">Trading Cards</option>
+  <option value="lego sets">LEGO Sets</option>
+  <option value="collectibles">Collectibles</option>
+</select>
+
+       <select id="sortFilter" class="form-select w-auto">
+  <option value="name">Sort by Name</option>
+  <option value="price">Sort by Price</option>
+</select>
+  <button class="btn btn-outline-primary">Filter</button>
+
+</div>
+
+      <!-- AFTER (fixed) -->
+
+
+
+
       <!-- FILTERS -->
-      <div class="d-flex gap-2 mb-3 flex-wrap">
-        <input type="text" class="form-control w-auto" placeholder="Search products...">
 
-        <select class="form-select w-auto">
-          <option>All Categories</option>
-          <option>Board Games</option>
-          <option>Trading Cards</option>
-          <option>LEGO Sets</option>
-          <option>Collectibles</option>
-        </select>
 
-        <select class="form-select w-auto">
-          <option>Sort by Name</option>
-          <option>Sort by Price</option>
-        </select>
 
-        <button class="btn btn-outline-primary">Filter</button>
-      </div>
 
       <!-- TABLE -->
       <div class="card border-0 shadow-sm">
@@ -288,7 +307,7 @@
               </tr>
             </thead>
 
-            <tbody>
+            <tbody id="productTableBody">
 
               @foreach($products as $item)
               <tr>
@@ -671,5 +690,110 @@
     </div>
   </div>
 </div>
+<script>
+// Fix 1: Properly pass PHP array to JS using json_encode
+const allProducts = @json($products);
 
+const searchInput = document.getElementById('searchInput');
+const suggestionsBox = document.getElementById('suggestions');
+const tableBody = document.getElementById('productTableBody');
+const categoryFilter = document.getElementById('categoryFilter');
+const sortFilter = document.getElementById('sortFilter');
+
+function filterProducts() {
+  const query = searchInput.value.trim().toLowerCase();
+  const category = categoryFilter.value.toLowerCase();
+  const sort = sortFilter.value;
+
+  let results = allProducts.filter(p => {
+    const matchesQuery = !query ||
+      p.name.toLowerCase().includes(query) ||
+      p.category.toLowerCase().includes(query);
+    const matchesCategory = !category || p.category.toLowerCase() === category;
+    return matchesQuery && matchesCategory;
+  });
+
+  if (sort === 'price') {
+    results.sort((a, b) => a.price - b.price);
+  } else {
+    results.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  return results;
+}
+
+function renderTable(items) {
+  tableBody.innerHTML = items.length === 0
+    ? `<tr><td colspan="5" class="text-center text-muted py-4">No products found.</td></tr>`
+    : items.map(item => `
+      <tr>
+        <td>
+          <div class="d-flex align-items-center gap-3">
+            <img src="/storage/${item.image}" width="40" height="40" class="rounded" onerror="this.src='https://via.placeholder.com/40'">
+            <span class="fw-semibold">${item.name}</span>
+          </div>
+        </td>
+        <td>${item.category}</td>
+        <td class="fw-bold">₱${item.price}</td>
+        <td>
+          <span class="badge bg-success-subtle text-success">${item.stock} units</span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-secondary" onclick="window.location='/admin/products/${item.id}'">View</button>
+          <button class="btn btn-sm btn-outline-primary" onclick="window.location='/admin/products/${item.id}/edit'">Edit</button>
+          <button class="btn btn-sm btn-outline-danger">Delete</button>
+        </td>
+      </tr>
+    `).join('');
+}
+
+function showSuggestions(query) {
+  if (!query.trim()) {
+    suggestionsBox.classList.add('d-none');
+    return;
+  }
+
+  const matches = allProducts
+    .filter(p => p.name.toLowerCase().includes(query.toLowerCase()))
+    .slice(0, 6);
+
+  if (!matches.length) {
+    suggestionsBox.classList.add('d-none');
+    return;
+  }
+
+  suggestionsBox.innerHTML = matches.map(p => `
+    <div class="p-2 border-bottom suggestion-item" style="cursor:pointer;" data-name="${p.name}">
+      <div class="fw-semibold">${p.name}</div>
+      <small class="text-muted">${p.category}</small>
+    </div>
+  `).join('');
+
+  suggestionsBox.querySelectorAll('.suggestion-item').forEach(el => {
+    el.addEventListener('mousedown', () => {
+      searchInput.value = el.dataset.name;
+      suggestionsBox.classList.add('d-none');
+      renderTable(filterProducts());
+    });
+  });
+
+  suggestionsBox.classList.remove('d-none');
+}
+
+// Event listeners
+searchInput.addEventListener('input', function () {
+  showSuggestions(this.value);
+  renderTable(filterProducts());
+});
+
+searchInput.addEventListener('blur', () => {
+  setTimeout(() => suggestionsBox.classList.add('d-none'), 150);
+});
+
+categoryFilter.addEventListener('change', () => renderTable(filterProducts()));
+sortFilter.addEventListener('change', () => renderTable(filterProducts()));
+
+// Initial render
+renderTable(filterProducts());
+</script>
 @endsection

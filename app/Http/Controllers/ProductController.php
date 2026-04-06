@@ -81,7 +81,10 @@ class ProductController extends Controller
     return view('pages.category_page', compact('sortedByCategory', 'search'));
    }
    public function product_details($id){
-        $product = Order::find($id);
+        $product = Product::find($id);
+        if (!$product) {
+            abort(404, 'Product not found');
+        }
         $suggestions = Product::latest()->take(4)->get();
         $favorite = Favorite::where('user_id', Auth::id())->where('product_id', $id)->exists();
         return view('pages.product_detail', compact('product','suggestions', 'favorite'));

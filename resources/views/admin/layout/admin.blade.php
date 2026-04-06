@@ -14,7 +14,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="d-flex flex-column flex-md-row min-vh-100 overflow-hidden">
+<body class="d-flex flex-column flex-md-row min-vh-100">
 
 <!-- ================= DESKTOP SIDEBAR ================= -->
 <aside class="d-none d-md-block" style="width:250px; height:100vh;">
@@ -56,10 +56,9 @@
 </div>
 
 <!-- ================= MAIN CONTENT ================= -->
-<main class="flex-grow-1 p-4">
+<main class="flex-grow-1 p-4 overflow-auto" style="height: 100vh;">
     @yield('content')
 </main>
-
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
